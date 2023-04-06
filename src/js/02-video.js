@@ -13,7 +13,7 @@ const saveCurrentTime = throttle((currentTime) => {
 // Получаем время воспроизведения из локального хранилища
 const getSavedTime = () => {
   const savedTime = localStorage.getItem(localStorageKey);
-  return savedTime ? parseFloat(savedTime) : 0;
+  return savedTime ? Number(savedTime) : 0;
 };
 
 // Восстанавливаем позицию воспроизведения из локального хранилища
