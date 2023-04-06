@@ -1,17 +1,25 @@
+
 import Player from '@vimeo/player';
-import throttle from "lodash.throttle";
+import throttle from 'lodash.throttle';
 
-const iframe = document.querySelector('iframe');
 const player = new Player('vimeo-player');
+const localStorageKey = 'videoplayer-current-time';
 
-player.on('timeupdate', _.throttle(function() {
-  localStorage.setItem('vimeo-player-current-time', player.getCurrentTime());
-}, 1000));
+// Сохраняем текущее время в локальное хранилище
+const saveCurrentTime = throttle((currentTime) => {
+  localStorage.setItem(localStorageKey, currentTime);
+}, 1000);
 
-    player.getVideoTitle().then(function(title) {
-        console.log('title:', title);
-    });
-const savedTime = localStorage.getItem('vimeo-player-current-time');
-if (savedTime) {
-  player.setCurrentTime(savedTime);
-}
+// Получаем время воспроизведения из локального хранилища
+const getSavedTime = () => {
+  const savedTime = localStorage.getItem(localStorageKey);
+  return savedTime ? parseFloat(savedTime) : 0;
+};
+
+// Восстанавливаем позицию воспроизведения из локального хранилища
+player.setCurrentTime(getSavedTime());
+
+// Сохраняем текущую позицию воспроизведения в локальное хранилище при обновлении времени
+player.on('timeupdate', ({ seconds }) => {
+  saveCurrentTime(seconds);
+});
