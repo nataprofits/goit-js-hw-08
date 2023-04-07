@@ -25,11 +25,12 @@ const loadStateFromLocalStorage = () => {
 };
 const resetForm = () => {
   localStorage.removeItem(feedbackFormStateKey);
-
+  
   console.log( {
     email: emailInput.value,
     message: messageInput.value,
   });
+  form.reset();
 };
 
 loadStateFromLocalStorage();
