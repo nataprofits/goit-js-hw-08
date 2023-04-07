@@ -25,9 +25,8 @@ const loadStateFromLocalStorage = () => {
 };
 const resetForm = () => {
   localStorage.removeItem(feedbackFormStateKey);
-  emailInput.value = '';
-  messageInput.value = '';
-  console.log('Form submitted with data:', {
+
+  console.log( {
     email: emailInput.value,
     message: messageInput.value,
   });
