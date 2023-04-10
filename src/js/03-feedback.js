@@ -6,11 +6,21 @@ const emailInput = form.querySelector('input');
 const messageInput = form.querySelector('textarea');
 const feedbackFormStateKey = 'feedback-form-state';
 
+// // Создаем ключ для хранения состояния формы в локальном хранилище.
+// const saveStateToLocalStorage = () => {
+//   const feedbackFormState = {
+//     email: emailInput.value,
+//     message: messageInput.value,
+//   };
+//   localStorage.setItem(feedbackFormStateKey, JSON.stringify(feedbackFormState));
+// };
+
 // Создаем ключ для хранения состояния формы в локальном хранилище.
 const saveStateToLocalStorage = () => {
+  const formData = new FormData(form);
   const feedbackFormState = {
-    email: emailInput.value,
-    message: messageInput.value,
+    email: formData.get('email'),
+    message: formData.get('message'),
   };
   localStorage.setItem(feedbackFormStateKey, JSON.stringify(feedbackFormState));
 };
@@ -42,4 +52,3 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
   resetForm();
 });
-
